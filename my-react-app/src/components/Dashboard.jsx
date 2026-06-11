@@ -3,9 +3,7 @@ import { useState } from "react";
 function Dashboard() {
   const [active, setActive] = useState("My Tasks");
   const [modalOpen, setModalOpen] = useState(false);
-
   const [tasks, setTasks] = useState([]);
-
   const [newTask, setNewTask] = useState({
     title: "",
     description: "",
@@ -57,7 +55,7 @@ function Dashboard() {
       <div className="flex-1 flex flex-col">
         {/* Header */}
         <header className="bg-white shadow px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-semibold">{active}</h1>
+          <h1 className="text-2xl font-bold">{active}</h1>
 
           <button
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
