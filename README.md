@@ -21,3 +21,4 @@ A simple React + Tailwind CSS task management dashboard that allows users to cre
 - React
 - JavaScript (ES6+)
 - Tailwind CSS
+
