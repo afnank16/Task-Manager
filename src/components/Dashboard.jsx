@@ -15,7 +15,7 @@ function Dashboard() {
 
     if (!newTask.title.trim()) return;
 
-    setTasks([...tasks, newTask]);
+    setTasks([...tasks, { ...newTask, id: Date.now() }]);
 
     setNewTask({
       title: "",
@@ -24,6 +24,20 @@ function Dashboard() {
     });
 
     setModalOpen(false);
+  };
+
+  const handleDelete = (taskId) => {
+    if (active === "Bin") {
+      // permanently remove
+      setTasks((prevTasks) => prevTasks.filter((t) => t.id !== taskId));
+    } else {
+      // move to bin
+      setTasks((prevTasks) =>
+        prevTasks.map((t) =>
+          t.id === taskId ? { ...t, status: "Bin" } : t
+        )
+      );
+    }
   };
 
   const filteredTasks = tasks.filter(
@@ -37,13 +51,12 @@ function Dashboard() {
         <h2 className="text-2xl font-bold mb-8">Task Manager</h2>
 
         <nav className="space-y-3">
-          {["My Tasks", "Saved", "Finished", "Deleted"].map((item) => (
+          {["My Tasks", "Saved", "Finished", "Bin"].map((item) => (
             <button
               key={item}
               onClick={() => setActive(item)}
-              className={`w-full text-left px-4 py-2 rounded hover:bg-gray-800 ${
-                active === item ? "bg-gray-800" : ""
-              }`}
+              className={`w-full text-left px-4 py-2 rounded hover:bg-gray-800 ${active === item ? "bg-gray-800" : ""
+                }`}
             >
               {item}
             </button>
@@ -86,9 +99,15 @@ function Dashboard() {
                     key={index}
                     className="border rounded-lg p-4 shadow-sm"
                   >
-                    <h3 className="text-lg font-semibold">
-                      {task.title}
-                    </h3>
+                    <div className="flex justify-between">
+                      <h3 className="text-lg font-semibold">
+                        {task.title}
+                      </h3>
+                      <button className="inline-block text-sm bg-gray-100 text-gray-700 px-2 py-1 rounded hover:bg-red-300 transition hover:cursor-pointer"
+                        onClick={() => handleDelete(task.id)}>
+                        delete
+                      </button>
+                    </div>
 
                     <p className="text-gray-600 mt-1">
                       {task.description}
@@ -97,6 +116,7 @@ function Dashboard() {
                     <span className="inline-block mt-3 text-sm bg-blue-100 text-blue-700 px-2 py-1 rounded">
                       {task.status}
                     </span>
+
                   </div>
                 ))}
               </div>
@@ -170,7 +190,6 @@ function Dashboard() {
                   <option>My Tasks</option>
                   <option>Saved</option>
                   <option>Finished</option>
-                  <option>Deleted</option>
                 </select>
               </div>
 
