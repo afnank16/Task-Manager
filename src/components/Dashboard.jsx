@@ -1,4 +1,7 @@
 import { useState } from "react";
+import { IoIosSave } from "react-icons/io";
+import { MdTask, MdCheckCircle, MdDelete } from "react-icons/md";
+
 
 function Dashboard() {
   const [active, setActive] = useState("My Tasks");
@@ -9,6 +12,13 @@ function Dashboard() {
     description: "",
     status: "My Tasks",
   });
+  const navItems = [
+    { label: "My Tasks", icon: <MdTask /> },
+    { label: "Saved", icon: <IoIosSave /> },
+    { label: "Finished", icon: <MdCheckCircle /> },
+    { label: "Bin", icon: <MdDelete /> },
+  ];
+
 
   const handleAddTask = (e) => {
     e.preventDefault();
@@ -51,14 +61,15 @@ function Dashboard() {
         <h2 className="text-2xl font-bold mb-8">Task Manager</h2>
 
         <nav className="space-y-3">
-          {["My Tasks", "Saved", "Finished", "Bin"].map((item) => (
+          {navItems.map(({ label, icon }) => (
             <button
-              key={item}
-              onClick={() => setActive(item)}
-              className={`w-full text-left px-4 py-2 rounded hover:bg-gray-800 ${active === item ? "bg-gray-800" : ""
+              key={label}
+              onClick={() => setActive(label)}
+              className={`w-full text-left px-4 py-2 rounded hover:bg-gray-800 flex items-center gap-2 ${active === label ? "bg-gray-800" : ""
                 }`}
             >
-              {item}
+              {icon}
+              {label}
             </button>
           ))}
         </nav>
