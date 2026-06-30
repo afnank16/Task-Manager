@@ -55,9 +55,9 @@ function Dashboard() {
   );
 
   return (
-    <div className="min-h-screen bg-gray-100 flex">
+    <div className="h-screen bg-gray-100 flex overflow-hidden">
       {/* Sidebar */}
-      <aside className="w-64 bg-gray-900 text-white min-h-screen p-5">
+      <aside className="w-64 bg-gray-900 text-white h-screen p-5 overflow-y-auto">
         <h2 className="text-2xl font-bold mb-8">Task Manager</h2>
 
         <nav className="space-y-3">
@@ -78,7 +78,7 @@ function Dashboard() {
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="bg-white shadow px-6 py-4 flex justify-between items-center">
+        <header className="bg-white shadow px-6 py-4 flex justify-between items-center flex-shrink-0">
           <h1 className="text-2xl font-bold">{active}</h1>
 
           <button
@@ -97,7 +97,7 @@ function Dashboard() {
         </header>
 
         {/* Content */}
-        <main className="p-6">
+        <main className="p-6 flex-1 overflow-y-auto">
           <div className="bg-white rounded-lg shadow p-6">
             {filteredTasks.length === 0 ? (
               <p className="text-gray-500">
@@ -151,6 +151,7 @@ function Dashboard() {
                 </label>
 
                 <input
+                  autoFocus
                   type="text"
                   placeholder="Task title"
                   value={newTask.title}
